@@ -1,0 +1,66 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+       {
+           "label": "buildApi",
+           "command": "dotnet",
+           "type": "process",
+           "args": [
+               "build",
+               "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/AbpHideTenantSwitch.HttpApi.Host.csproj",
+               "/property:GenerateFullPaths=true",
+               "/consoleloggerparameters:NoSummary"
+           ],
+           "problemMatcher": "$msCompile"
+       },
+       {
+           "label": "buildIdentityServer",
+           "command": "dotnet",
+           "type": "process",
+           "args": [
+               "build",
+               "${workspaceFolder}/src/AbpHideTenantSwitch.IdentityServer/AbpHideTenantSwitch.IdentityServer.csproj",
+               "/property:GenerateFullPaths=true",
+               "/consoleloggerparameters:NoSummary"
+           ],
+           "problemMatcher": "$msCompile"
+       },
+       {
+           "label": "buildDbMigrator",
+           "command": "dotnet",
+           "type": "process",
+           "args": [
+               "build",
+               "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator/AbpHideTenantSwitch.DbMigrator.csproj",
+               "/property:GenerateFullPaths=true",
+               "/consoleloggerparameters:NoSummary"
+           ],
+           "problemMatcher": "$msCompile"
+       },
+       {
+           "label": "publish",
+           "command": "dotnet",
+           "type": "process",
+           "args": [
+               "publish",
+               "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/AbpHideTenantSwitch.HttpApi.Host.csproj",
+               "/property:GenerateFullPaths=true",
+               "/consoleloggerparameters:NoSummary"
+           ],
+           "problemMatcher": "$msCompile"
+       },
+       {
+           "label": "watch",
+           "command": "dotnet",
+           "type": "process",
+           "args": [
+               "watch",
+               "run",
+               "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/AbpHideTenantSwitch.HttpApi.Host.csproj",
+               "/property:GenerateFullPaths=true",
+               "/consoleloggerparameters:NoSummary"
+           ],
+           "problemMatcher": "$msCompile"
+       }
+   ]
+}   
