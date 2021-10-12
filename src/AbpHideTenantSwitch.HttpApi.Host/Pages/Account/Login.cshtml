@@ -1,0 +1,45 @@
+@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bootstrap
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bundling
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.Account.Localization
+@using Volo.Abp.Account.Settings
+@using Volo.Abp.Settings
+
+@model AbpHideTenantSwitch.HttpApi.Host.Pages.Account.CustomLoginModel
+
+@inject IHtmlLocalizer<AccountResource> L
+@inject Volo.Abp.Settings.ISettingProvider SettingProvider
+
+<div class="card text-center mt-3 shadow-sm rounded">
+    <div class="card-body abp-background p-5">
+        <div class="form-group">
+            <img src="~/assets/images/thumbs-up.png" alt="MyImage" width="100%" >
+        </div>
+        @if (Model.EnableLocalLogin)
+        {
+            <form method="post" class="mt-4 text-left">
+                <input asp-for="ReturnUrl" />
+                <input asp-for="ReturnUrlHash" />
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
+                    <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LoginInput.Password"></label>
+                    <input asp-for="LoginInput.Password" class="form-control" />
+                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                </div>
+                <abp-button type="submit" button-type="Danger" name="Action" value="Login" class="btn-block btn-lg mt-3">@L["Login"]</abp-button>
+                @if (Model.ShowCancelButton)
+                {
+                    <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-block btn-lg mt-3">@L["Cancel"]</abp-button>
+                }
+            </form>
+        }
+    </div>
+</div>

@@ -28,6 +28,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.MultiTenancy;
 
 namespace AbpHideTenantSwitch
 {
@@ -58,15 +59,28 @@ namespace AbpHideTenantSwitch
             ConfigureVirtualFileSystem(context);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context, configuration);
+            ConfigureTenantResolver(context, configuration);
         }
 
+        private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            Configure<AbpTenantResolveOptions>(options =>
+            {
+                options.TenantResolvers.Clear();
+                options.TenantResolvers.Add(new CurrentUserTenantResolveContributor());
+            });
+        }
         private void ConfigureBundles()
         {
             Configure<AbpBundlingOptions>(options =>
             {
                 options.StyleBundles.Configure(
                     BasicThemeBundles.Styles.Global,
-                    bundle => { bundle.AddFiles("/global-styles.css"); }
+                    bundle =>
+                    {
+                        bundle.AddFiles("/global-styles.css");
+                        bundle.AddFiles("/custom-login-styles.css");
+                    }
                 );
             });
         }
@@ -141,7 +155,7 @@ namespace AbpHideTenantSwitch
                 },
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "AbpHideTenantSwitch API", Version = "v1"});
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "AbpHideTenantSwitch API", Version = "v1" });
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
                 });
@@ -175,21 +189,21 @@ namespace AbpHideTenantSwitch
         {
             context.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy( builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
+                options.AddDefaultPolicy(builder =>
+               {
+                   builder
+                       .WithOrigins(
+                           configuration["App:CorsOrigins"]
+                               .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                               .Select(o => o.RemovePostFix("/"))
+                               .ToArray()
+                       )
+                       .WithAbpExposedHeaders()
+                       .SetIsOriginAllowedToAllowWildcardSubdomains()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+               });
             });
         }
 
