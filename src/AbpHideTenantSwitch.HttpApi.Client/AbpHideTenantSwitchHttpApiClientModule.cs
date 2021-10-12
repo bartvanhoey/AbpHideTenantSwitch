@@ -6,7 +6,6 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.SettingManagement;
-using Volo.Abp.VirtualFileSystem;
 
 namespace AbpHideTenantSwitch
 {
@@ -29,11 +28,6 @@ namespace AbpHideTenantSwitch
                 typeof(AbpHideTenantSwitchApplicationContractsModule).Assembly,
                 RemoteServiceName
             );
-
-            Configure<AbpVirtualFileSystemOptions>(options =>
-            {
-                options.FileSets.AddEmbedded<AbpHideTenantSwitchHttpApiClientModule>();
-            });
         }
     }
 }

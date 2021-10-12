@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,13 +22,13 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="5.0.0-beta.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="4.4.3" />
     <ProjectReference Include="..\AbpHideTenantSwitch.Application.Contracts\AbpHideTenantSwitch.Application.Contracts.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.EntityFrameworkCore\AbpHideTenantSwitch.EntityFrameworkCore.csproj" />
   </ItemGroup>

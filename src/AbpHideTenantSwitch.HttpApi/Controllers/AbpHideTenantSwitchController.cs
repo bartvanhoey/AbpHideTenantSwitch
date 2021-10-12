@@ -5,7 +5,7 @@ namespace AbpHideTenantSwitch.Controllers
 {
     /* Inherit your controllers from this class.
      */
-    public abstract class AbpHideTenantSwitchController : AbpControllerBase
+    public abstract class AbpHideTenantSwitchController : AbpController
     {
         protected AbpHideTenantSwitchController()
         {

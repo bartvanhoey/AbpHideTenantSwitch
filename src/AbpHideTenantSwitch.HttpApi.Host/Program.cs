@@ -45,7 +45,10 @@ namespace AbpHideTenantSwitch
 
         internal static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .AddAppSettingsSecretsJson()
+                .ConfigureAppConfiguration(build =>
+                {
+                    build.AddJsonFile("appsettings.secrets.json", optional: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

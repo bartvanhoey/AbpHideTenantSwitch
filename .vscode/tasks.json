@@ -14,18 +14,6 @@
            "problemMatcher": "$msCompile"
        },
        {
-           "label": "buildIdentityServer",
-           "command": "dotnet",
-           "type": "process",
-           "args": [
-               "build",
-               "${workspaceFolder}/src/AbpHideTenantSwitch.IdentityServer/AbpHideTenantSwitch.IdentityServer.csproj",
-               "/property:GenerateFullPaths=true",
-               "/consoleloggerparameters:NoSummary"
-           ],
-           "problemMatcher": "$msCompile"
-       },
-       {
            "label": "buildDbMigrator",
            "command": "dotnet",
            "type": "process",
@@ -63,4 +51,4 @@
            "problemMatcher": "$msCompile"
        }
    ]
-}   
+}
