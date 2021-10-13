@@ -2,11 +2,11 @@
 
 ## Introduction
 
-In this step-by-step guide I will explain how you can hide the tenant switch on the login page of an **ABP Framework** application. 
+In this step-by-step guide I will explain how you can hide the tenant switch on the login page of an **ABP Framework** application. After implementing all the steps below a user should be able to login with email address and password without losing multitenancy.
 
 The sample application has been developed with **Blazor** as UI framework and **SQL Server** as database provider.
 
-### Source Code
+## Source Code
 
 The source code of the completed application is [available on GitHub](https://github.com/bartvanhoey/AbpHideTenantSwitchRepo).
 
@@ -46,25 +46,25 @@ abp new AbpHideTenantSwitch -u blazor
     <!-- <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="4.4.3" /> -->
 ```
 
-## Copy Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic module to the src folder of your project
+### Paste Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic module into src folder of ABP project
 
-* Open a command prompt and clone the [apb repository](https://github.com/abpframework/abp) into your computer.
+* Open a command prompt and clone the [ABP repository](https://github.com/abpframework/abp) into your computer.
 
 ```bash
    git clone https://github.com/abpframework/abp
 ```
 
 * Find module **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic**(abp/modules/basic-theme/src/...) in the ABP repo.
-* Copy the module into your **src folder** of the project.
+* Copy/Paste the module into your **src folder** of the project.
 
-## Comment out and replace in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj  
+### Comment out and replace in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj  
 
 ```html
     <!-- <Import Project="..\..\..\..\configureawait.props" /> -->
     <Import Project="..\..\common.props" />
 ```
 
-## Comment out in Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
+### Comment out in Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
 
 ```html
   <!-- <ItemGroup>
@@ -73,39 +73,51 @@ abp new AbpHideTenantSwitch -u blazor
   </ItemGroup> -->
 ```
 
-## Open a command prompt in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic and install packages
+### Install ABP packages
+
+Open a command prompt in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic and install packages
 
 ```bash
     abp add-package Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy
     abp add-package Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared
 ```
 
-## Change Target DOTNET framework Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
+### Change dotnet Target Framework
+
+Open file **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj** and change dotnet target framework.
 
 ```html
     <!-- <TargetFramework>net6.0</TargetFramework> -->
     <TargetFramework>net5.0</TargetFramework> 
 ```
 
-## Open a command prompt in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic and build
+### Build Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic project
+
+Open a **command prompt** in the **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** project and run command below:
 
 ```bash
     dotnet build
 ```
 
-## Add a reference to Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic in the HttpApi.Host.csproj file
+### Add reference to Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic
+
+Open a **command prompt** in the **HttpApi.Host** project and add a reference to Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic in the HttpApi.Host.csproj file by running command below
 
 ```bash
    dotnet add reference ../../src/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
 ```
 
-## Open a command prompt in the HttpApiHost and build
+### Build the HttpApi.Host project
+
+Open a **command prompt** in the **HttpApi.Host project** and run command below:
 
 ```bash
     dotnet build
 ```
 
-## Goto Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Themes\Basic\Themes\Basic\Layouts\Account.cshtml
+### Hide Tenant Switch in Account.cshtml file
+
+Goto Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Themes\Basic\Themes\Basic\Layouts\Account.cshtml
 
 Comment out if statement below to hide Tenant Switch.
 
@@ -142,7 +154,9 @@ Comment out if statement below to hide Tenant Switch.
 
 ```
 
-## Add method below right under the ConfigureServices method in the HttpApiHostModule class of the HttpApi.Host project
+### Add ConfigureTenantResolver() method in HttpApiHostModule of HttpApi.Host project
+
+Add method ConfigureTenantResolver right under the **ConfigureServices** method in the **HttpApiHostModule** class of the **HttpApi.Host project**
 
 ```csharp
 // import using statements
@@ -156,7 +170,7 @@ private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfi
 }
 ```
 
-## Call method CookieTenantResolveContributor from the ConfigureServices method
+### Call ConfigureTenantResolver() method from ConfigureServices() method
 
 ```csharp
 public override void ConfigureServices(ServiceConfigurationContext context)
@@ -167,9 +181,9 @@ public override void ConfigureServices(ServiceConfigurationContext context)
 }
 ```
 
-## Add a Pages/Account folder to HttpApi.Host project
+### Add a Pages/Account folder to HttpApi.Host project
 
-## Add  a CustomLoginModel.cs class to the Account folder
+### Add a CustomLoginModel.cs class to the Account folder
 
 ```csharp
 using System;
@@ -230,7 +244,6 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
                     }
                 }
             }
-
             return null;
         }
     }
@@ -238,7 +251,7 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
 
 ```
 
-## Add a Login.cshtml file to Account folder
+### Add a Login.cshtml file to the Account folder
 
 ```html
 @page
@@ -288,7 +301,9 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
 </div>
 ```
 
-## add a file custom-login-styles.css to the wwwroot folder of the HttpApi.Host project
+### Custom styles Login page
+
+Add a **custom-login-styles.css** file to the **wwwroot** folder of the **HttpApi.Host** project
 
 ```html
 .abp-background {
@@ -297,7 +312,9 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
 
 ```
 
-## Open file AbpHideTenantSwitchHttpApiHostModule.cs and add custom-login-styles.css to bundle
+### Add custom styles to Bundle
+
+Open file **AbpHideTenantSwitchHttpApiHostModule.cs** of the **HttpApi.Host** project and add custom-login-styles.css to bundle.
 
 ```csharp
 private void ConfigureBundles()
@@ -316,17 +333,17 @@ private void ConfigureBundles()
    }
 ```
 
-## Add an Image
+### Add an Image
 
-Add an **assets/images** folder to the **wwwroot** folder of the **HttpApi.Host** project and copy/paste the an image in the **images** folder.  
+Add an **assets/images** folder to the **wwwroot** folder of the **HttpApi.Host** project and copy/paste an image into **images** folder.  
 
-## Start both the Blazor and the HttpApi.Host project to run the application
+### Start both the Blazor and the**HttpApi.Host**project to run the application
 
 Et voilà! This is the result. A Login page without a Tenant switch.
 
 ![Login page without tenant switch](Images/hidetenantswitchonloginpage.png)
 
-A user can now login without specifying the tenant name.
+A user can now login with email address and username without specifying the tenant name.
 
 Get the [source code](https://github.com/bartvanhoey/AbpHideTenantSwitchRepo.git) on GitHub.
 
