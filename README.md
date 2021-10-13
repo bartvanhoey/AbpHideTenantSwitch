@@ -75,7 +75,7 @@ abp new AbpHideTenantSwitch -u blazor -o AbpHideTenantSwitch
 
 ### Install ABP packages
 
-Open a command prompt in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic and install packages
+Open a command prompt in the **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** and install ABP packages
 
 ```bash
     abp add-package Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy
