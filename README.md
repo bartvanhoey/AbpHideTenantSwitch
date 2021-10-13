@@ -160,6 +160,8 @@ Add method ConfigureTenantResolver right under the **ConfigureServices** method 
 
 ```csharp
 // import using statements
+// using Volo.Abp.MultiTenancy;
+
 private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
 {
     Configure<AbpTenantResolveOptions>(options =>
