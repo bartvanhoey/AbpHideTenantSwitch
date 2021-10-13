@@ -1,8 +1,8 @@
-## Hide the Tenant Switch from the login page of an ABP Framework application
+## Hide Tenant Switch from an ABP Framework Login page
 
 ## Introduction
 
-In this step-by-step guide I will explain how you can hide the tenant switch on the login page of an **ABP Framework** application.
+In this step-by-step guide I will explain how you can hide the tenant switch on the login page of an **ABP Framework** application. 
 
 The sample application has been developed with **Blazor** as UI framework and **SQL Server** as database provider.
 
