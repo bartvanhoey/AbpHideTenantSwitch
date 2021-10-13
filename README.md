@@ -188,7 +188,6 @@ public override void ConfigureServices(ServiceConfigurationContext context)
 ### Add a CustomLoginModel.cs class to the Account folder
 
 ```csharp
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
