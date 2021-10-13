@@ -30,7 +30,7 @@ dotnet tool install -g Volo.Abp.Cli || dotnet tool update -g Volo.Abp.Cli
 * Use the following ABP CLI command to create a new Blazor ABP application:
 
 ```bash
-abp new AbpHideTenantSwitch -u blazor
+abp new AbpHideTenantSwitch -u blazor -o AbpHideTenantSwitch
 ```
 
 ### Open & Run the Application
