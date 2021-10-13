@@ -54,7 +54,7 @@ abp new AbpHideTenantSwitch -u blazor -o AbpHideTenantSwitch
    git clone https://github.com/abpframework/abp
 ```
 
-* Find module **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic**(abp/modules/basic-theme/src/...) in the ABP repo.
+* Find module **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** (abp/modules/basic-theme/src/...) in the ABP repo.
 * Copy/Paste the module into your **src folder** of the project.
 
 ### Comment out and replace in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj  
