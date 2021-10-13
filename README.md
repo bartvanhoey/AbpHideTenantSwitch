@@ -8,7 +8,7 @@ The sample application has been developed with **Blazor** as UI framework and **
 
 ## Source Code
 
-The source code of the completed application is [available on GitHub](https://github.com/bartvanhoey/AbpHideTenantSwitchRepo).
+The source code of the completed application is [available on GitHub](https://github.com/bartvanhoey/AbpHideTenantSwitch).
 
 ## Requirements
 
@@ -346,6 +346,6 @@ Et voilà! This is the result. A Login page without a Tenant switch.
 
 A user can now login with email address and username without specifying the tenant name.
 
-Get the [source code](https://github.com/bartvanhoey/AbpHideTenantSwitchRepo.git) on GitHub.
+Get the [source code](https://github.com/bartvanhoey/AbpHideTenantSwitch.git) on GitHub.
 
 Enjoy and have fun!
