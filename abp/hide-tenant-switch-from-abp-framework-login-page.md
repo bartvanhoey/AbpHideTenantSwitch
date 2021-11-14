@@ -4,9 +4,9 @@
 
 In this step-by-step guide I will explain how you can hide the tenant switch on the login page of an **ABP Framework** application. After implementing all the steps below a user should be able to login with email address and password without losing multitenancy.
 
-The sample application has been developed with **Blazor** as UI framework and **SQL Server** as database provider.
-
 ## Source Code
+
+The sample application has been developed with **Blazor** as UI framework and **SQL Server** as database provider.
 
 The source code of the completed application is [available on GitHub](https://github.com/bartvanhoey/AbpHideTenantSwitchRepo).
 
