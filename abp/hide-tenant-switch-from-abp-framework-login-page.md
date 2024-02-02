@@ -68,7 +68,7 @@ Open a **command prompt** in the **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** proj
 Open a **command prompt** in the **HttpApi.Host** project and add a reference to Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic in the HttpApi.Host.csproj file by running command below
 
 ```bash
-   dotnet add reference ../../src/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
+   dotnet add reference ../../modules/Volo.BasicTheme/src/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
 ```
 
 ### Replace AbpAspNetCoreMvcUiLeptonXLiteThemeModule with AbpAspNetCoreMvcUiBasicThemeModule
