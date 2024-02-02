@@ -14,8 +14,9 @@ The source code of the completed application is [available on GitHub](https://gi
 
 The following tools are needed to run the solution.
 
-- .NET 5.0 SDK
-- VsCode, Visual Studio 2019 or another compatible IDE.
+- .NET 8.0 SDK
+- VsCode, Visual Studio 2022 or another compatible IDE
+- ABP CLI 8.0.0 or higher
 
 ## Development
 
