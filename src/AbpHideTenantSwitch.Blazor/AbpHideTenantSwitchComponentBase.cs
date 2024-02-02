@@ -1,13 +1,12 @@
 ﻿using AbpHideTenantSwitch.Localization;
 using Volo.Abp.AspNetCore.Components;
 
-namespace AbpHideTenantSwitch.Blazor
+namespace AbpHideTenantSwitch.Blazor;
+
+public abstract class AbpHideTenantSwitchComponentBase : AbpComponentBase
 {
-    public abstract class AbpHideTenantSwitchComponentBase : AbpComponentBase
+    protected AbpHideTenantSwitchComponentBase()
     {
-        protected AbpHideTenantSwitchComponentBase()
-        {
-            LocalizationResource = typeof(AbpHideTenantSwitchResource);
-        }
+        LocalizationResource = typeof(AbpHideTenantSwitchResource);
     }
 }

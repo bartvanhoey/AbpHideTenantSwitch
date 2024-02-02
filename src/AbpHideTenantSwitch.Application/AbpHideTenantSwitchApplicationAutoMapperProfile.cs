@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+public class AbpHideTenantSwitchApplicationAutoMapperProfile : Profile
 {
-    public class AbpHideTenantSwitchApplicationAutoMapperProfile : Profile
+    public AbpHideTenantSwitchApplicationAutoMapperProfile()
     {
-        public AbpHideTenantSwitchApplicationAutoMapperProfile()
-        {
-            /* You can configure your AutoMapper mapping configuration here.
-             * Alternatively, you can split your mapping configurations
-             * into multiple profile classes for a better organization. */
-        }
+        /* You can configure your AutoMapper mapping configuration here.
+         * Alternatively, you can split your mapping configurations
+         * into multiple profile classes for a better organization. */
     }
 }

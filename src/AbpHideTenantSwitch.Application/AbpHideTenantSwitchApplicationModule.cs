@@ -7,26 +7,25 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+[DependsOn(
+    typeof(AbpHideTenantSwitchDomainModule),
+    typeof(AbpAccountApplicationModule),
+    typeof(AbpHideTenantSwitchApplicationContractsModule),
+    typeof(AbpIdentityApplicationModule),
+    typeof(AbpPermissionManagementApplicationModule),
+    typeof(AbpTenantManagementApplicationModule),
+    typeof(AbpFeatureManagementApplicationModule),
+    typeof(AbpSettingManagementApplicationModule)
+    )]
+public class AbpHideTenantSwitchApplicationModule : AbpModule
 {
-    [DependsOn(
-        typeof(AbpHideTenantSwitchDomainModule),
-        typeof(AbpAccountApplicationModule),
-        typeof(AbpHideTenantSwitchApplicationContractsModule),
-        typeof(AbpIdentityApplicationModule),
-        typeof(AbpPermissionManagementApplicationModule),
-        typeof(AbpTenantManagementApplicationModule),
-        typeof(AbpFeatureManagementApplicationModule),
-        typeof(AbpSettingManagementApplicationModule)
-        )]
-    public class AbpHideTenantSwitchApplicationModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
+        Configure<AbpAutoMapperOptions>(options =>
         {
-            Configure<AbpAutoMapperOptions>(options =>
-            {
-                options.AddMaps<AbpHideTenantSwitchApplicationModule>();
-            });
-        }
+            options.AddMaps<AbpHideTenantSwitchApplicationModule>();
+        });
     }
 }

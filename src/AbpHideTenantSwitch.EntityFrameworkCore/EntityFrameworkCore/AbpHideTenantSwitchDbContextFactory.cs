@@ -1,33 +1,33 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace AbpHideTenantSwitch.EntityFrameworkCore
+namespace AbpHideTenantSwitch.EntityFrameworkCore;
+
+/* This class is needed for EF Core console commands
+ * (like Add-Migration and Update-Database commands) */
+public class AbpHideTenantSwitchDbContextFactory : IDesignTimeDbContextFactory<AbpHideTenantSwitchDbContext>
 {
-    /* This class is needed for EF Core console commands
-     * (like Add-Migration and Update-Database commands) */
-    public class AbpHideTenantSwitchDbContextFactory : IDesignTimeDbContextFactory<AbpHideTenantSwitchDbContext>
+    public AbpHideTenantSwitchDbContext CreateDbContext(string[] args)
     {
-        public AbpHideTenantSwitchDbContext CreateDbContext(string[] args)
-        {
-            AbpHideTenantSwitchEfCoreEntityExtensionMappings.Configure();
+        AbpHideTenantSwitchEfCoreEntityExtensionMappings.Configure();
 
-            var configuration = BuildConfiguration();
+        var configuration = BuildConfiguration();
 
-            var builder = new DbContextOptionsBuilder<AbpHideTenantSwitchDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+        var builder = new DbContextOptionsBuilder<AbpHideTenantSwitchDbContext>()
+            .UseSqlServer(configuration.GetConnectionString("Default"));
 
-            return new AbpHideTenantSwitchDbContext(builder.Options);
-        }
+        return new AbpHideTenantSwitchDbContext(builder.Options);
+    }
 
-        private static IConfigurationRoot BuildConfiguration()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../AbpHideTenantSwitch.DbMigrator/"))
-                .AddJsonFile("appsettings.json", optional: false);
+    private static IConfigurationRoot BuildConfiguration()
+    {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../AbpHideTenantSwitch.DbMigrator/"))
+            .AddJsonFile("appsettings.json", optional: false);
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
 }

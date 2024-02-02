@@ -3,66 +3,83 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AbpHideTenantSwitch.Localization;
+using AbpHideTenantSwitch.MultiTenancy;
 using Volo.Abp.Account.Localization;
 using Volo.Abp.Authorization.Permissions;
+using Volo.Abp.Identity.Blazor;
+using Volo.Abp.SettingManagement.Blazor.Menus;
+using Volo.Abp.TenantManagement.Blazor.Navigation;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.Users;
 
-namespace AbpHideTenantSwitch.Blazor.Menus
+namespace AbpHideTenantSwitch.Blazor.Menus;
+
+public class AbpHideTenantSwitchMenuContributor : IMenuContributor
 {
-    public class AbpHideTenantSwitchMenuContributor : IMenuContributor
+    private readonly IConfiguration _configuration;
+
+    public AbpHideTenantSwitchMenuContributor(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
+        _configuration = configuration;
+    }
 
-        public AbpHideTenantSwitchMenuContributor(IConfiguration configuration)
+    public async Task ConfigureMenuAsync(MenuConfigurationContext context)
+    {
+        if (context.Menu.Name == StandardMenus.Main)
         {
-            _configuration = configuration;
+            await ConfigureMainMenuAsync(context);
+        }
+        else if (context.Menu.Name == StandardMenus.User)
+        {
+            await ConfigureUserMenuAsync(context);
+        }
+    }
+
+    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    {
+        var l = context.GetLocalizer<AbpHideTenantSwitchResource>();
+
+        context.Menu.Items.Insert(
+            0,
+            new ApplicationMenuItem(
+                AbpHideTenantSwitchMenus.Home,
+                l["Menu:Home"],
+                "/",
+                icon: "fas fa-home"
+            )
+        );
+     
+        var administration = context.Menu.GetAdministration();
+
+        if (MultiTenancyConsts.IsEnabled)
+        {
+            administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
+        }
+        else
+        {
+            administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
         }
 
-        public async Task ConfigureMenuAsync(MenuConfigurationContext context)
-        {
-            if (context.Menu.Name == StandardMenus.Main)
-            {
-                await ConfigureMainMenuAsync(context);
-            }
-            else if (context.Menu.Name == StandardMenus.User)
-            {
-                await ConfigureUserMenuAsync(context);
-            }
-        }
+        administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
+        administration.SetSubItemOrder(SettingManagementMenus.GroupName, 3);
 
-        private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
-        {
-            var l = context.GetLocalizer<AbpHideTenantSwitchResource>();
+        return Task.CompletedTask;
+    }
 
-            context.Menu.Items.Insert(
-                0,
-                new ApplicationMenuItem(
-                    AbpHideTenantSwitchMenus.Home,
-                    l["Menu:Home"],
-                    "/",
-                    icon: "fas fa-home"
-                )
-            );
+    private Task ConfigureUserMenuAsync(MenuConfigurationContext context)
+    {
+        var accountStringLocalizer = context.GetLocalizer<AccountResource>();
 
-            return Task.CompletedTask;
-        }
+        var authServerUrl = _configuration["AuthServer:Authority"] ?? "";
 
-        private Task ConfigureUserMenuAsync(MenuConfigurationContext context)
-        {
-            var accountStringLocalizer = context.GetLocalizer<AccountResource>();
+        context.Menu.AddItem(new ApplicationMenuItem(
+            "Account.Manage",
+            accountStringLocalizer["MyAccount"],
+            $"{authServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
+            icon: "fa fa-cog",
+            order: 1000,
+            null).RequireAuthenticated());
 
-            var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
-
-            context.Menu.AddItem(new ApplicationMenuItem(
-                "Account.Manage",
-                accountStringLocalizer["MyAccount"],
-                $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
-                icon: "fa fa-cog",
-                order: 1000,
-                null).RequireAuthenticated());
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 
-namespace AbpHideTenantSwitch.Blazor
+namespace AbpHideTenantSwitch.Blazor;
+
+public class AbpHideTenantSwitchBlazorAutoMapperProfile : Profile
 {
-    public class AbpHideTenantSwitchBlazorAutoMapperProfile : Profile
+    public AbpHideTenantSwitchBlazorAutoMapperProfile()
     {
-        public AbpHideTenantSwitchBlazorAutoMapperProfile()
-        {
-            //Define your AutoMapper configuration here for the Blazor project.
-        }
+        //Define your AutoMapper configuration here for the Blazor project.
     }
 }

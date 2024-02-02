@@ -1,11 +1,10 @@
-﻿namespace AbpHideTenantSwitch.Blazor.Menus
+﻿namespace AbpHideTenantSwitch.Blazor.Menus;
+
+public class AbpHideTenantSwitchMenus
 {
-    public class AbpHideTenantSwitchMenus
-    {
-        private const string Prefix = "AbpHideTenantSwitch";
-        public const string Home = Prefix + ".Home";
+    private const string Prefix = "AbpHideTenantSwitch";
+    public const string Home = Prefix + ".Home";
 
-        //Add your menu items here...
+    //Add your menu items here...
 
-    }
 }

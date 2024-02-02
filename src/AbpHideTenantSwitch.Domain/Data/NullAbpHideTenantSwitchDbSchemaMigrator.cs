@@ -1,16 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
-namespace AbpHideTenantSwitch.Data
+namespace AbpHideTenantSwitch.Data;
+
+/* This is used if database provider does't define
+ * IAbpHideTenantSwitchDbSchemaMigrator implementation.
+ */
+public class NullAbpHideTenantSwitchDbSchemaMigrator : IAbpHideTenantSwitchDbSchemaMigrator, ITransientDependency
 {
-    /* This is used if database provider does't define
-     * IAbpHideTenantSwitchDbSchemaMigrator implementation.
-     */
-    public class NullAbpHideTenantSwitchDbSchemaMigrator : IAbpHideTenantSwitchDbSchemaMigrator, ITransientDependency
+    public Task MigrateAsync()
     {
-        public Task MigrateAsync()
-        {
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

@@ -43,52 +43,15 @@ abp new AbpHideTenantSwitch -u blazor -o AbpHideTenantSwitch
 ### Open HttpApi.Host.csproj and comment out the line below
 
 ```html
-<!-- <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="4.4.3" /> -->
+<!-- <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite" Version="3.0.*-*" /> -->
 ```
 
-### Paste Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic module into src folder of ABP project
+### Add Volo.BasicTheme module to the project
 
-- Open a command prompt and clone the [ABP repository](https://github.com/abpframework/abp) into your computer.
+- Open a command prompt in the root of the project and run the command abp add-module
 
 ```bash
-   git clone https://github.com/abpframework/abp
-```
-
-- Find module **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** (abp/modules/basic-theme/src/...) in the ABP repo.
-- Copy/Paste the module into your **src folder** of the project.
-
-### Comment out and replace in the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
-
-```html
-<!-- <Import Project="..\..\..\..\configureawait.props" /> -->
-<Import Project="..\..\common.props" />
-```
-
-### Comment out in Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
-
-```html
-<!-- <ItemGroup>
-    <ProjectReference Include="..\..\..\..\framework\src\Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy\Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy.csproj" />
-    <ProjectReference Include="..\..\..\..\framework\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared\Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.csproj" />
-  </ItemGroup> -->
-```
-
-### Install ABP packages
-
-Open a command prompt in the **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic** and install ABP packages
-
-```bash
-    abp add-package Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy
-    abp add-package Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared
-```
-
-### Change dotnet Target Framework
-
-Open file **Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj** and change dotnet target framework.
-
-```html
-<!-- <TargetFramework>net6.0</TargetFramework> -->
-<TargetFramework>net5.0</TargetFramework>
+    abp add-module Volo.BasicTheme --with-source-code --add-to-solution-file
 ```
 
 ### Build Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic project
@@ -107,17 +70,13 @@ Open a **command prompt** in the **HttpApi.Host** project and add a reference to
    dotnet add reference ../../src/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
 ```
 
-### Build the HttpApi.Host project
+### Replace AbpAspNetCoreMvcUiLeptonXLiteThemeModule with AbpAspNetCoreMvcUiBasicThemeModule
 
-Open a **command prompt** in the **HttpApi.Host project** and run command below:
-
-```bash
-    dotnet build
-```
+Replace **typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule)**, with **typeof(AbpAspNetCoreMvcUiBasicThemeModule)** in the DependsOn section of the HttpApiHostModule.cs file in the HttpApi.Host project
 
 ### Hide Tenant Switch in Account.cshtml file
 
-Goto Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Themes\Basic\Themes\Basic\Layouts\Account.cshtml
+Goto the Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Themes\Basic\Themes\Basic\Layouts\Account.cshtml file in the BasicTheme module
 
 Comment out if statement below to hide Tenant Switch.
 
@@ -182,9 +141,8 @@ private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfi
 ```csharp
 public override void ConfigureServices(ServiceConfigurationContext context)
 {
- // other code here ...
-
-  ConfigureTenantResolver(context, configuration);
+    // other code here ...
+    ConfigureTenantResolver(context, configuration);
 }
 ```
 
@@ -260,14 +218,18 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
 ### Add a Login.cshtml file to the Account folder
 
 ```html
-@page @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers @addTagHelper *,
-Volo.Abp.AspNetCore.Mvc.UI @addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bootstrap
-@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bundling @using
-Microsoft.AspNetCore.Mvc.Localization @using Volo.Abp.Account.Localization
-@using Volo.Abp.Account.Settings @using Volo.Abp.Settings @model
-AbpHideTenantSwitch.HttpApi.Host.Pages.Account.CustomLoginModel @inject
-IHtmlLocalizer<AccountResource>
-    L @inject Volo.Abp.Settings.ISettingProvider SettingProvider
+@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers 
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI 
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bootstrap
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bundling 
+@using Microsoft.AspNetCore.Mvc.Localization 
+@using Volo.Abp.Account.Localization
+@using Volo.Abp.Account.Settings 
+@using Volo.Abp.Settings 
+@model AbpHideTenantSwitch.HttpApi.Host.Pages.Account.CustomLoginModel 
+@inject IHtmlLocalizer<AccountResource> L
+@inject Volo.Abp.Settings.ISettingProvider SettingProvider
 
     <div class="card text-center mt-3 shadow-sm rounded">
         <div class="card-body abp-background p-5">
@@ -323,7 +285,7 @@ IHtmlLocalizer<AccountResource>
             </form>
             }
         </div>
-    </div></AccountResource
+    </div>
 >
 ```
 
@@ -332,7 +294,7 @@ IHtmlLocalizer<AccountResource>
 Add a **custom-login-styles.css** file to the **wwwroot** folder of the **HttpApi.Host** project
 
 ```html
-.abp-background { background-color: yellow !important; }
+    .abp-background { background-color: yellow !important; }
 ```
 
 ### Add custom styles to Bundle
@@ -364,7 +326,7 @@ Add an **assets/images** folder to the **wwwroot** folder of the **HttpApi.Host*
 
 Et voilà! The Login page **without a Tenant switch**!
 
-![Login page without tenant switch](/Images/hidetenantswitchonloginpage.png)
+![Login page without tenant switch](https://github.com/bartvanhoey/AbpHideTenantSwitch/blob/main/Images/hidetenantswitchonloginpage.png?raw=true)
 
 A user can now login with email address and username without specifying the tenant name.
 

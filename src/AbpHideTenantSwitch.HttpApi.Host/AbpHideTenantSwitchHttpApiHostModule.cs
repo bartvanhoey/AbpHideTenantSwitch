@@ -2,258 +2,236 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AbpHideTenantSwitch.EntityFrameworkCore;
 using AbpHideTenantSwitch.MultiTenancy;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.MultiTenancy;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+[DependsOn(
+    typeof(AbpHideTenantSwitchHttpApiModule),
+    typeof(AbpAutofacModule),
+    typeof(AbpAspNetCoreMultiTenancyModule),
+    typeof(AbpHideTenantSwitchApplicationModule),
+    typeof(AbpHideTenantSwitchEntityFrameworkCoreModule),
+    typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+    typeof(AbpAccountWebOpenIddictModule),
+    typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpSwashbuckleModule)
+)]
+public class AbpHideTenantSwitchHttpApiHostModule : AbpModule
 {
-    [DependsOn(
-        typeof(AbpHideTenantSwitchHttpApiModule),
-        typeof(AbpAutofacModule),
-        typeof(AbpAspNetCoreMultiTenancyModule),
-        typeof(AbpHideTenantSwitchApplicationModule),
-        typeof(AbpHideTenantSwitchEntityFrameworkCoreModule),
-        typeof(AbpAspNetCoreMvcUiBasicThemeModule),
-        typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
-        typeof(AbpAccountWebIdentityServerModule),
-        typeof(AbpAspNetCoreSerilogModule),
-        typeof(AbpSwashbuckleModule)
-    )]
-    public class AbpHideTenantSwitchHttpApiHostModule : AbpModule
+    public override void PreConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
+        PreConfigure<OpenIddictBuilder>(builder =>
         {
-            var configuration = context.Services.GetConfiguration();
-            var hostingEnvironment = context.Services.GetHostingEnvironment();
-
-            ConfigureBundles();
-            ConfigureUrls(configuration);
-            ConfigureConventionalControllers();
-            ConfigureAuthentication(context, configuration);
-            ConfigureLocalization();
-            ConfigureVirtualFileSystem(context);
-            ConfigureCors(context, configuration);
-            ConfigureSwaggerServices(context, configuration);
-            ConfigureTenantResolver(context, configuration);
-        }
-
-        private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
-        {
-            Configure<AbpTenantResolveOptions>(options =>
+            builder.AddValidation(options =>
             {
-                options.TenantResolvers.Clear();
-                options.TenantResolvers.Add(new CurrentUserTenantResolveContributor());
+                options.AddAudiences("AbpHideTenantSwitch");
+                options.UseLocalServer();
+                options.UseAspNetCore();
             });
-        }
-        private void ConfigureBundles()
+        });
+    }
+
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        var configuration = context.Services.GetConfiguration();
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        ConfigureAuthentication(context);
+        ConfigureBundles();
+        ConfigureUrls(configuration);
+        ConfigureConventionalControllers();
+        ConfigureVirtualFileSystem(context);
+        ConfigureCors(context, configuration);
+        ConfigureSwaggerServices(context, configuration);
+        ConfigureTenantResolver(context, configuration);
+    }
+
+
+    private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        Configure<AbpTenantResolveOptions>(options =>
         {
-            Configure<AbpBundlingOptions>(options =>
-            {
-                options.StyleBundles.Configure(
-                    BasicThemeBundles.Styles.Global,
-                    bundle =>
-                    {
-                        bundle.AddFiles("/global-styles.css");
-                        bundle.AddFiles("/custom-login-styles.css");
-                    }
-                );
-            });
-        }
+            options.TenantResolvers.Clear();
+            options.TenantResolvers.Add(new CurrentUserTenantResolveContributor());
+        });
+    }
 
-        private void ConfigureUrls(IConfiguration configuration)
+    private void ConfigureAuthentication(ServiceConfigurationContext context)
+    {
+        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
-            Configure<AppUrlOptions>(options =>
-            {
-                options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
-                options.RedirectAllowedUrls.AddRange(configuration["App:RedirectAllowedUrls"].Split(','));
+            options.IsDynamicClaimsEnabled = true;
+        });
+    }
 
-                options.Applications["Angular"].RootUrl = configuration["App:ClientUrl"];
-                options.Applications["Angular"].Urls[AccountUrlNames.PasswordReset] = "account/reset-password";
-            });
-        }
-
-        private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
+    private void ConfigureBundles()
+    {
+        Configure<AbpBundlingOptions>(options =>
         {
-            var hostingEnvironment = context.Services.GetHostingEnvironment();
-
-            if (hostingEnvironment.IsDevelopment())
-            {
-                Configure<AbpVirtualFileSystemOptions>(options =>
+            options.StyleBundles.Configure(
+                BasicThemeBundles.Styles.Global,
+                bundle =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchDomainSharedModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Domain.Shared"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchDomainModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Domain"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchApplicationContractsModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Application.Contracts"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchApplicationModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Application"));
-                });
-            }
-        }
+                    bundle.AddFiles("/global-styles.css");
+                    bundle.AddFiles("/custom-login-styles.css");
+                }
+            );
+        });
+    }
 
-        private void ConfigureConventionalControllers()
+    private void ConfigureUrls(IConfiguration configuration)
+    {
+        Configure<AppUrlOptions>(options =>
         {
-            Configure<AbpAspNetCoreMvcOptions>(options =>
+            options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
+            options.RedirectAllowedUrls.AddRange(configuration["App:RedirectAllowedUrls"]?.Split(',') ?? Array.Empty<string>());
+
+            options.Applications["Angular"].RootUrl = configuration["App:ClientUrl"];
+            options.Applications["Angular"].Urls[AccountUrlNames.PasswordReset] = "account/reset-password";
+        });
+    }
+
+    private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
+    {
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        if (hostingEnvironment.IsDevelopment())
+        {
+            Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.ConventionalControllers.Create(typeof(AbpHideTenantSwitchApplicationModule).Assembly);
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchDomainSharedModule>(
+                    Path.Combine(hostingEnvironment.ContentRootPath,
+                        $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Domain.Shared"));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchDomainModule>(
+                    Path.Combine(hostingEnvironment.ContentRootPath,
+                        $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Domain"));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchApplicationContractsModule>(
+                    Path.Combine(hostingEnvironment.ContentRootPath,
+                        $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Application.Contracts"));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpHideTenantSwitchApplicationModule>(
+                    Path.Combine(hostingEnvironment.ContentRootPath,
+                        $"..{Path.DirectorySeparatorChar}AbpHideTenantSwitch.Application"));
             });
         }
+    }
 
-        private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
+    private void ConfigureConventionalControllers()
+    {
+        Configure<AbpAspNetCoreMvcOptions>(options =>
         {
-            context.Services.AddAuthentication()
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                    options.Audience = "AbpHideTenantSwitch";
-                    options.BackchannelHttpHandler = new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback =
-                            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                    };
-                });
-        }
+            options.ConventionalControllers.Create(typeof(AbpHideTenantSwitchApplicationModule).Assembly);
+        });
+    }
 
-        private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)
-        {
-            context.Services.AddAbpSwaggerGenWithOAuth(
-                configuration["AuthServer:Authority"],
-                new Dictionary<string, string>
-                {
+    private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        context.Services.AddAbpSwaggerGenWithOAuth(
+            configuration["AuthServer:Authority"]!,
+            new Dictionary<string, string>
+            {
                     {"AbpHideTenantSwitch", "AbpHideTenantSwitch API"}
-                },
-                options =>
-                {
-                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "AbpHideTenantSwitch API", Version = "v1" });
-                    options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
-                });
-        }
-
-        private void ConfigureLocalization()
-        {
-            Configure<AbpLocalizationOptions>(options =>
+            },
+            options =>
             {
-                options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
-                options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
-                options.Languages.Add(new LanguageInfo("en", "en", "English"));
-                options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
-                options.Languages.Add(new LanguageInfo("fi", "fi", "Finnish"));
-                options.Languages.Add(new LanguageInfo("fr", "fr", "Français"));
-                options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi", "in"));
-                options.Languages.Add(new LanguageInfo("it", "it", "Italian", "it"));
-                options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
-                options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português"));
-                options.Languages.Add(new LanguageInfo("ru", "ru", "Русский"));
-                options.Languages.Add(new LanguageInfo("sk", "sk", "Slovak"));
-                options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
-                options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-                options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
-                options.Languages.Add(new LanguageInfo("de-DE", "de-DE", "Deutsch", "de"));
-                options.Languages.Add(new LanguageInfo("es", "es", "Español", "es"));
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AbpHideTenantSwitch API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+                options.CustomSchemaIds(type => type.FullName);
             });
-        }
+    }
 
-        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+    private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        context.Services.AddCors(options =>
         {
-            context.Services.AddCors(options =>
+            options.AddDefaultPolicy(builder =>
             {
-                options.AddDefaultPolicy(builder =>
-               {
-                   builder
-                       .WithOrigins(
-                           configuration["App:CorsOrigins"]
-                               .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                               .Select(o => o.RemovePostFix("/"))
-                               .ToArray()
-                       )
-                       .WithAbpExposedHeaders()
-                       .SetIsOriginAllowedToAllowWildcardSubdomains()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod()
-                       .AllowCredentials();
-               });
+                builder
+                    .WithOrigins(configuration["App:CorsOrigins"]?
+                        .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                        .Select(o => o.RemovePostFix("/"))
+                        .ToArray() ?? Array.Empty<string>())
+                    .WithAbpExposedHeaders()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             });
-        }
+        });
+    }
 
-        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    {
+        var app = context.GetApplicationBuilder();
+        var env = context.GetEnvironment();
+
+        if (env.IsDevelopment())
         {
-            var app = context.GetApplicationBuilder();
-            var env = context.GetEnvironment();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseAbpRequestLocalization();
-
-            if (!env.IsDevelopment())
-            {
-                app.UseErrorPage();
-            }
-
-            app.UseCorrelationId();
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseCors();
-            app.UseAuthentication();
-            app.UseJwtTokenMiddleware();
-
-            if (MultiTenancyConsts.IsEnabled)
-            {
-                app.UseMultiTenancy();
-            }
-
-            app.UseUnitOfWork();
-            app.UseIdentityServer();
-            app.UseAuthorization();
-
-            app.UseSwagger();
-            app.UseAbpSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AbpHideTenantSwitch API");
-
-                var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
-                c.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-                c.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-                c.OAuthScopes("AbpHideTenantSwitch");
-            });
-
-            app.UseAuditing();
-            app.UseAbpSerilogEnrichers();
-            app.UseConfiguredEndpoints();
+            app.UseDeveloperExceptionPage();
         }
+
+        app.UseAbpRequestLocalization();
+
+        if (!env.IsDevelopment())
+        {
+            app.UseErrorPage();
+        }
+
+        app.UseCorrelationId();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseCors();
+        app.UseAuthentication();
+        app.UseAbpOpenIddictValidation();
+
+        if (MultiTenancyConsts.IsEnabled)
+        {
+            app.UseMultiTenancy();
+        }
+        app.UseUnitOfWork();
+        app.UseDynamicClaims();
+        app.UseAuthorization();
+
+        app.UseSwagger();
+        app.UseAbpSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "AbpHideTenantSwitch API");
+
+            var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
+            c.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+            c.OAuthScopes("AbpHideTenantSwitch");
+        });
+
+        app.UseAuditing();
+        app.UseAbpSerilogEnrichers();
+        app.UseConfiguredEndpoints();
     }
 }

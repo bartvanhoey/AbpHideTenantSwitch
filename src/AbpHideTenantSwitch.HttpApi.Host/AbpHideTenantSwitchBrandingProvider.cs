@@ -1,11 +1,10 @@
 ﻿using Volo.Abp.DependencyInjection;
 using Volo.Abp.Ui.Branding;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+[Dependency(ReplaceServices = true)]
+public class AbpHideTenantSwitchBrandingProvider : DefaultBrandingProvider
 {
-    [Dependency(ReplaceServices = true)]
-    public class AbpHideTenantSwitchBrandingProvider : DefaultBrandingProvider
-    {
-        public override string AppName => "AbpHideTenantSwitch";
-    }
+    public override string AppName => "AbpHideTenantSwitch";
 }

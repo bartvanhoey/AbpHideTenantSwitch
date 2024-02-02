@@ -5,6 +5,20 @@ VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpHideTenantSwitch.Domain", "src\AbpHideTenantSwitch.Domain\AbpHideTenantSwitch.Domain.csproj", "{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.BasicTheme.Installer", "modules\Volo.BasicTheme\src\Volo.Abp.BasicTheme.Installer\Volo.Abp.BasicTheme.Installer.csproj", "{41103471-1A06-4874-ACE4-BFAACC73F6C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic", "modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj", "{DBA6817C-3CB6-4E34-90D0-604CC0CA90C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme", "modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme.csproj", "{5620CF12-0F36-461A-AFA2-CF175BDD8C44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Components.Web.BasicTheme", "modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Components.Web.BasicTheme\Volo.Abp.AspNetCore.Components.Web.BasicTheme.csproj", "{4A183182-EF6A-4CEE-A252-A80C2412F8BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Components.Server.BasicTheme", "modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Components.Server.BasicTheme\Volo.Abp.AspNetCore.Components.Server.BasicTheme.csproj", "{3330DAC7-60B7-4354-9215-FB62548B1F04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volo.BasicTheme", "Volo.BasicTheme", "{3A60FE9E-F725-4EBE-A53E-AB4DF867213E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{F6830DEC-7219-4582-B98B-A03EB434A2E2}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpHideTenantSwitch.Application", "src\AbpHideTenantSwitch.Application\AbpHideTenantSwitch.Application.csproj", "{1A94A50E-06DC-43C1-80B5-B662820EC3EB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpHideTenantSwitch.EntityFrameworkCore", "src\AbpHideTenantSwitch.EntityFrameworkCore\AbpHideTenantSwitch.EntityFrameworkCore.csproj", "{C956DD76-69C8-4A9C-83EA-D17DF83340FD}"
@@ -43,6 +57,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41103471-1a06-4874-ace4-bfaacc73f6c7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41103471-1a06-4874-ace4-bfaacc73f6c7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41103471-1a06-4874-ace4-bfaacc73f6c7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41103471-1a06-4874-ace4-bfaacc73f6c7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{dba6817c-3cb6-4e34-90d0-604cc0ca90c8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{dba6817c-3cb6-4e34-90d0-604cc0ca90c8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{dba6817c-3cb6-4e34-90d0-604cc0ca90c8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{dba6817c-3cb6-4e34-90d0-604cc0ca90c8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5620cf12-0f36-461a-afa2-cf175bdd8c44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5620cf12-0f36-461a-afa2-cf175bdd8c44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5620cf12-0f36-461a-afa2-cf175bdd8c44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5620cf12-0f36-461a-afa2-cf175bdd8c44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4a183182-ef6a-4cee-a252-a80c2412f8bf}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4a183182-ef6a-4cee-a252-a80c2412f8bf}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4a183182-ef6a-4cee-a252-a80c2412f8bf}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4a183182-ef6a-4cee-a252-a80c2412f8bf}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3330dac7-60b7-4354-9215-fb62548b1f04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3330dac7-60b7-4354-9215-fb62548b1f04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3330dac7-60b7-4354-9215-fb62548b1f04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3330dac7-60b7-4354-9215-fb62548b1f04}.Release|Any CPU.Build.0 = Release|Any CPU
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -108,6 +142,16 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{d935fbc9-6980-4a80-af4d-f4d92ad30ef2} = {d3b4e2fd-89f1-4e7e-ba77-13872ed4a27e}
+		{fd718148-bfc3-4734-ac44-3fea95947848} = {d3b4e2fd-89f1-4e7e-ba77-13872ed4a27e}
+		{dad434c1-be61-4499-b050-bdf75ab9a990} = {d3b4e2fd-89f1-4e7e-ba77-13872ed4a27e}
+		{41103471-1a06-4874-ace4-bfaacc73f6c7} = {3a60fe9e-f725-4ebe-a53e-ab4df867213e}
+		{dba6817c-3cb6-4e34-90d0-604cc0ca90c8} = {3a60fe9e-f725-4ebe-a53e-ab4df867213e}
+		{5620cf12-0f36-461a-afa2-cf175bdd8c44} = {3a60fe9e-f725-4ebe-a53e-ab4df867213e}
+		{4a183182-ef6a-4cee-a252-a80c2412f8bf} = {3a60fe9e-f725-4ebe-a53e-ab4df867213e}
+		{3330dac7-60b7-4354-9215-fb62548b1f04} = {3a60fe9e-f725-4ebe-a53e-ab4df867213e}
+		{d3b4e2fd-89f1-4e7e-ba77-13872ed4a27e} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
+		{3a60fe9e-f725-4ebe-a53e-ab4df867213e} = {f6830dec-7219-4582-b98b-a03eb434a2e2}
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{1A94A50E-06DC-43C1-80B5-B662820EC3EB} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{C956DD76-69C8-4A9C-83EA-D17DF83340FD} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}

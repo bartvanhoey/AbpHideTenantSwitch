@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace AbpHideTenantSwitch.Data
+namespace AbpHideTenantSwitch.Data;
+
+public interface IAbpHideTenantSwitchDbSchemaMigrator
 {
-    public interface IAbpHideTenantSwitchDbSchemaMigrator
-    {
-        Task MigrateAsync();
-    }
+    Task MigrateAsync();
 }

@@ -1,7 +1,6 @@
-﻿namespace AbpHideTenantSwitch.Blazor.Pages
-{
-    public partial class Index
-    {
+﻿namespace AbpHideTenantSwitch.Blazor.Pages;
 
-    }
+public partial class Index
+{
+
 }

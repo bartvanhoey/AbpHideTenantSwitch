@@ -254,9 +254,12 @@ paket-files/
 # AbpHideTenantSwitch
 src/AbpHideTenantSwitch.Web/Logs/*
 src/AbpHideTenantSwitch.Web.Host/Logs/*
-src/AbpHideTenantSwitch.IdentityServer/Logs/*
+src/AbpHideTenantSwitch.AuthServer/Logs/*
 src/AbpHideTenantSwitch.HttpApi.Host/Logs/*
 src/AbpHideTenantSwitch.HttpApi.Host/Logs/*
 src/AbpHideTenantSwitch.DbMigrator/Logs/*
 src/AbpHideTenantSwitch.Blazor.Server/Logs/*
 src/AbpHideTenantSwitch.Blazor.Server.Tiered/Logs/*
+
+# Use abp install-libs to restore.
+**/wwwroot/libs/*

@@ -4,15 +4,14 @@ using System.Text;
 using AbpHideTenantSwitch.Localization;
 using Volo.Abp.Application.Services;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+/* Inherit your application services from this class.
+ */
+public abstract class AbpHideTenantSwitchAppService : ApplicationService
 {
-    /* Inherit your application services from this class.
-     */
-    public abstract class AbpHideTenantSwitchAppService : ApplicationService
+    protected AbpHideTenantSwitchAppService()
     {
-        protected AbpHideTenantSwitchAppService()
-        {
-            LocalizationResource = typeof(AbpHideTenantSwitchResource);
-        }
+        LocalizationResource = typeof(AbpHideTenantSwitchResource);
     }
 }
