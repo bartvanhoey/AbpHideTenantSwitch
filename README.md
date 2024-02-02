@@ -71,7 +71,7 @@ Open a **command prompt** in the **HttpApi.Host** project and add a reference to
    dotnet add reference ../../modules/Volo.BasicTheme/src/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic/Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj
 ```
 
-### Replace AbpAspNetCoreMvcUiLeptonXLiteThemeModule with AbpAspNetCoreMvcUiBasicThemeModule
+### Replace AbpAspNetCoreMvcUiLeptonXLiteThemeModule
 
 Replace **typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule)**, with **typeof(AbpAspNetCoreMvcUiBasicThemeModule)** in the DependsOn section of the HttpApiHostModule.cs file in the HttpApi.Host project
 
