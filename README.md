@@ -232,7 +232,7 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
         <div class="card-body abp-background p-5">
             <div class="form-group">
                 <img
-                    src="~/assets/images/thumbs-up.png"
+                    src="https://github.com/bartvanhoey/AbpHideTenantSwitch/blob/main/src/AbpHideTenantSwitch.HttpApi.Host/wwwroot/images/thumbs-up.png?raw=true"
                     alt="ThumbsUp"
                     width="100%"
                 />
