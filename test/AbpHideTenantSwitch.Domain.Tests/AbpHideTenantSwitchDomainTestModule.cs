@@ -1,13 +1,12 @@
-﻿using AbpHideTenantSwitch.EntityFrameworkCore;
-using Volo.Abp.Modularity;
+﻿using Volo.Abp.Modularity;
 
-namespace AbpHideTenantSwitch
+namespace AbpHideTenantSwitch;
+
+[DependsOn(
+    typeof(AbpHideTenantSwitchDomainModule),
+    typeof(AbpHideTenantSwitchTestBaseModule)
+)]
+public class AbpHideTenantSwitchDomainTestModule : AbpModule
 {
-    [DependsOn(
-        typeof(AbpHideTenantSwitchEntityFrameworkCoreTestModule)
-        )]
-    public class AbpHideTenantSwitchDomainTestModule : AbpModule
-    {
 
-    }
 }

@@ -3,16 +3,18 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <RootNamespace>AbpHideTenantSwitch</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AbpHideTenantSwitch.EntityFrameworkCore.Tests\AbpHideTenantSwitch.EntityFrameworkCore.Tests.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
+    <ProjectReference Include="..\..\src\AbpHideTenantSwitch.Domain\AbpHideTenantSwitch.Domain.csproj" />
+    <ProjectReference Include="..\AbpHideTenantSwitch.TestBase\AbpHideTenantSwitch.TestBase.csproj" />
   </ItemGroup>
 
 </Project>

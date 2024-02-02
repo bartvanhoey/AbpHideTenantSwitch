@@ -1,15 +1,14 @@
 ﻿using AbpHideTenantSwitch.Localization;
 using Volo.Abp.AspNetCore.Mvc;
 
-namespace AbpHideTenantSwitch.Controllers
+namespace AbpHideTenantSwitch.Controllers;
+
+/* Inherit your controllers from this class.
+ */
+public abstract class AbpHideTenantSwitchController : AbpControllerBase
 {
-    /* Inherit your controllers from this class.
-     */
-    public abstract class AbpHideTenantSwitchController : AbpController
+    protected AbpHideTenantSwitchController()
     {
-        protected AbpHideTenantSwitchController()
-        {
-            LocalizationResource = typeof(AbpHideTenantSwitchResource);
-        }
+        LocalizationResource = typeof(AbpHideTenantSwitchResource);
     }
 }
