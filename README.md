@@ -83,40 +83,34 @@ Comment out if statement below to hide Tenant Switch.
 
 ```html
 @* @if (MultiTenancyOptions.Value.IsEnabled &&
-(TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(CookieTenantResolveContributor.ContributorName)
-== true ||
-TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(QueryStringTenantResolveContributor.ContributorName)
-== true)) {
+(TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(CookieTenantResolveContributor.ContributorName) == true ||
+TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(QueryStringTenantResolveContributor.ContributorName) == true))
+{
 <div class="card shadow-sm rounded mb-3">
     <div class="card-body px-5">
         <div class="row">
             <div class="col">
-                <span style="font-size: .8em;" class="text-uppercase text-muted"
-                    >@MultiTenancyStringLocalizer["Tenant"]</span
-                ><br />
+                <span style="font-size: .8em;" class="text-uppercase text-muted">@MultiTenancyStringLocalizer["Tenant"]</span><br />
                 <h6 class="m-0 d-inline-block">
-                    @if (CurrentTenant.Id == null) {
-                    <span> @MultiTenancyStringLocalizer["NotSelected"] </span>
-                    } else {
-                    <strong
-                        >@(CurrentTenant.Name ??
-                        CurrentTenant.Id.Value.ToString())</strong
-                    >
+                    @if (CurrentTenant.Id == null)
+                    {
+                    <span>
+                                                @MultiTenancyStringLocalizer["NotSelected"]
+                                            </span>
+                    }
+                    else
+                    {
+                    <strong>@(CurrentTenant.Name ?? CurrentTenant.Id.Value.ToString())</strong>
                     }
                 </h6>
             </div>
             <div class="col-auto">
-                <a
-                    id="AbpTenantSwitchLink"
-                    href="javascript:;"
-                    class="btn btn-sm mt-3 btn-outline-primary"
-                    >@MultiTenancyStringLocalizer["Switch"]</a
-                >
+                <a id="AbpTenantSwitchLink" href="javascript:;" class="btn btn-sm mt-3 btn-outline-primary">@MultiTenancyStringLocalizer["Switch"]</a>
             </div>
         </div>
     </div>
 </div>
-}
+} *@
 ```
 
 ### Add ConfigureTenantResolver() method in HttpApiHostModule of HttpApi.Host project
