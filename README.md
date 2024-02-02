@@ -159,6 +159,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Volo.Abp.Account.Web;
 using Volo.Abp.Account.Web.Pages.Account;
+using Volo.Abp.Identity;
 using Volo.Abp.TenantManagement;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
@@ -168,7 +169,8 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
     {
         private readonly ITenantRepository _tenantRepository;
 
-        public CustomLoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, ITenantRepository tenantRepository) : base(schemeProvider, accountOptions, identityOptions)
+        public CustomLoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, ITenantRepository tenantRepository, IdentityDynamicClaimsPrincipalContributorCache contributorCache)
+        : base(schemeProvider, accountOptions, identityOptions, contributorCache)
         {
             _tenantRepository = tenantRepository;
         }
