@@ -287,7 +287,6 @@ namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
             }
         </div>
     </div>
->
 ```
 
 ### Custom styles Login page
