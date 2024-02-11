@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpHideTenantSwitch.Migrations
 {
     [DbContext(typeof(AbpHideTenantSwitchDbContext))]
-    [Migration("20240201191921_Initial")]
+    [Migration("20240211185335_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AbpHideTenantSwitch.EntityFrameworkCore;
 using AbpHideTenantSwitch.MultiTenancy;
+
 using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
@@ -28,8 +29,8 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 
 namespace AbpHideTenantSwitch;
 
@@ -39,7 +40,9 @@ namespace AbpHideTenantSwitch;
     typeof(AbpAspNetCoreMultiTenancyModule),
     typeof(AbpHideTenantSwitchApplicationModule),
     typeof(AbpHideTenantSwitchEntityFrameworkCoreModule),
+    // typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
@@ -59,6 +62,8 @@ public class AbpHideTenantSwitchHttpApiHostModule : AbpModule
         });
     }
 
+
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
@@ -71,18 +76,20 @@ public class AbpHideTenantSwitchHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
-        ConfigureTenantResolver(context, configuration);
+        ConfigureTenantResolver(context,configuration);
     }
 
+    // import using statements
+// using Volo.Abp.MultiTenancy;
 
-    private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
+private void ConfigureTenantResolver(ServiceConfigurationContext context, IConfiguration configuration)
+{
+    Configure<AbpTenantResolveOptions>(options =>
     {
-        Configure<AbpTenantResolveOptions>(options =>
-        {
-            options.TenantResolvers.Clear();
-            options.TenantResolvers.Add(new CurrentUserTenantResolveContributor());
-        });
-    }
+        options.TenantResolvers.Clear();
+        options.TenantResolvers.Add(new CurrentUserTenantResolveContributor());
+});
+}
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
     {
@@ -98,6 +105,7 @@ public class AbpHideTenantSwitchHttpApiHostModule : AbpModule
         Configure<AbpBundlingOptions>(options =>
         {
             options.StyleBundles.Configure(
+                // LeptonXLiteThemeBundles.Styles.Global,
                 BasicThemeBundles.Styles.Global,
                 bundle =>
                 {

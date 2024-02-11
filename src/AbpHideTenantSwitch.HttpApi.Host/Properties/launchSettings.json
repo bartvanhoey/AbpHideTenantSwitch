@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44372",
-      "sslPort": 44372
+      "applicationUrl": "https://localhost:44344",
+      "sslPort": 44344
     }
   },
   "profiles": {
@@ -18,7 +18,7 @@
     "AbpHideTenantSwitch.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44372",
+      "applicationUrl": "https://localhost:44344",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

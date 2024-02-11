@@ -16,8 +16,7 @@
           "type": "coreclr",
           "request": "launch",
           "preLaunchTask": "buildApi",
-          // If you have changed target frameworks, make sure to update the program path.
-          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/bin/Debug/net5.0/AbpHideTenantSwitch.HttpApi.Host.dll",
+          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/bin/Debug/net8.0/AbpHideTenantSwitch.HttpApi.Host.dll",
           "args": [],
           "cwd": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host",
           "stopAtEntry": false,
@@ -38,8 +37,7 @@
           "type": "coreclr",
           "request": "launch",
           "preLaunchTask": "buildApi",
-          // If you have changed target frameworks, make sure to update the program path.
-          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/bin/Debug/net5.0/AbpHideTenantSwitch.HttpApi.Host.dll",
+          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host/bin/Debug/net8.0/AbpHideTenantSwitch.HttpApi.Host.dll",
           "args": [],
           "cwd": "${workspaceFolder}/src/AbpHideTenantSwitch.HttpApi.Host",
           "stopAtEntry": false,
@@ -60,8 +58,7 @@
           "type": "coreclr",
           "request": "launch",
           "preLaunchTask": "buildDbMigrator",
-          // If you have changed target frameworks, make sure to update the program path.
-          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator/bin/Debug/net5.0/AbpHideTenantSwitch.DbMigrator.dll",
+          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator/bin/Debug/net8.0/AbpHideTenantSwitch.DbMigrator.dll",
           "args": [],
           "cwd": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator",
           "stopAtEntry": false,
@@ -82,8 +79,7 @@
           "type": "coreclr",
           "request": "launch",
           "preLaunchTask": "buildDbMigrator",
-          // If you have changed target frameworks, make sure to update the program path.
-          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator/bin/Debug/net5.0/AbpHideTenantSwitch.DbMigrator.dll",
+          "program": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator/bin/Debug/net8.0/AbpHideTenantSwitch.DbMigrator.dll",
           "args": [],
           "cwd": "${workspaceFolder}/src/AbpHideTenantSwitch.DbMigrator",
           "stopAtEntry": false,

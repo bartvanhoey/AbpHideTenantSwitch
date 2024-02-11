@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\AbpHideTenantSwitch.EntityFrameworkCore\AbpHideTenantSwitch.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.Application.Tests\AbpHideTenantSwitch.Application.Tests.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.0.2" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>

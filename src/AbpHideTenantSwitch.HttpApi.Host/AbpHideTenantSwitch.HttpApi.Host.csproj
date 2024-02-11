@@ -8,18 +8,16 @@
     <RootNamespace>AbpHideTenantSwitch</RootNamespace>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <UserSecretsId>AbpHideTenantSwitch-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
-    
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-    <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="8.0.2" />
-    
-    <PackageReference Include="Volo.Abp.Autofac" Version="8.0.2" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="8.0.2" />
-    <PackageReference Include="Volo.Abp.Swashbuckle" Version="8.0.2" />
-    <PackageReference Include="Volo.Abp.Account.Web.OpenIddict" Version="8.0.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="8.0.3" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="8.0.3" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="8.0.3" />
+    <PackageReference Include="Volo.Abp.Swashbuckle" Version="8.0.3" />
+    <PackageReference Include="Volo.Abp.Account.Web.OpenIddict" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.Application\AbpHideTenantSwitch.Application.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.EntityFrameworkCore\AbpHideTenantSwitch.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.HttpApi\AbpHideTenantSwitch.HttpApi.csproj" />
+    <ProjectReference Include="..\..\modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

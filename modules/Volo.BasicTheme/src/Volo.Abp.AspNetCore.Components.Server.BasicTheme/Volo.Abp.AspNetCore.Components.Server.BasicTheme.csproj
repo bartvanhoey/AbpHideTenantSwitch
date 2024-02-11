@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" VersionOverride="8.0.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" VersionOverride="8.0.3" />
     <ProjectReference Include="..\Volo.Abp.AspNetCore.Components.Web.BasicTheme\Volo.Abp.AspNetCore.Components.Web.BasicTheme.csproj" />
   </ItemGroup>
 

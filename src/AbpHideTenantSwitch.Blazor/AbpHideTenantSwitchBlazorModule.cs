@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AbpHideTenantSwitch.Blazor.Menus;
 using OpenIddict.Abstractions;
+using Volo.Abp.AspNetCore.Components.WebAssembly.LeptonXLiteTheme;
+using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.AutoMapper;
@@ -16,8 +18,6 @@ using Volo.Abp.Identity.Blazor.WebAssembly;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.Blazor.WebAssembly;
 using Volo.Abp.TenantManagement.Blazor.WebAssembly;
-using Volo.Abp.AspNetCore.Components.WebAssembly.LeptonXLiteTheme;
-using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
 
 namespace AbpHideTenantSwitch.Blazor;
 
@@ -26,7 +26,7 @@ namespace AbpHideTenantSwitch.Blazor;
     typeof(AbpHideTenantSwitchHttpApiClientModule),
     typeof(AbpAspNetCoreComponentsWebAssemblyLeptonXLiteThemeModule),
     typeof(AbpIdentityBlazorWebAssemblyModule),
-     typeof(AbpTenantManagementBlazorWebAssemblyModule),
+    typeof(AbpTenantManagementBlazorWebAssemblyModule),
     typeof(AbpSettingManagementBlazorWebAssemblyModule)
 )]
 public class AbpHideTenantSwitchBlazorModule : AbpModule

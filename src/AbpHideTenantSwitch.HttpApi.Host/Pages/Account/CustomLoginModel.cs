@@ -9,14 +9,14 @@ using Volo.Abp.Identity;
 using Volo.Abp.TenantManagement;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
-namespace AbpHideTenantSwitch.Pages.Account
+namespace AbpHideTenantSwitch.HttpApi.Host.Pages.Account
 {
     public class CustomLoginModel : LoginModel
     {
         private readonly ITenantRepository _tenantRepository;
 
-        public CustomLoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, ITenantRepository tenantRepository, IdentityDynamicClaimsPrincipalContributorCache contributorCache) 
-            : base(schemeProvider, accountOptions, identityOptions, contributorCache)
+        public CustomLoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, ITenantRepository tenantRepository, IdentityDynamicClaimsPrincipalContributorCache contributorCache)
+        : base(schemeProvider, accountOptions, identityOptions, contributorCache)
         {
             _tenantRepository = tenantRepository;
         }

@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="8.0.2" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="8.0.3" />
     <ProjectReference Include="..\AbpHideTenantSwitch.Application.Contracts\AbpHideTenantSwitch.Application.Contracts.csproj" />
     <ProjectReference Include="..\AbpHideTenantSwitch.EntityFrameworkCore\AbpHideTenantSwitch.EntityFrameworkCore.csproj" />
   </ItemGroup>
